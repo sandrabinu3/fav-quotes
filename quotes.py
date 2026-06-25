@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
-
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL",
@@ -20,6 +19,8 @@ class FavQuote(db.Model):
     def __repr__(self):
         return f"<FavQuote {self.author}>"
 
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def index():
